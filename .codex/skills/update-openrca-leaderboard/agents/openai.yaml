@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update OpenRCA Leaderboard"
+  short_description: "Refresh OpenRCA 2.0 leaderboard metrics"
+  default_prompt: "Use $update-openrca-leaderboard to refresh OpenRCA 2.0 leaderboard data from eval.db."
