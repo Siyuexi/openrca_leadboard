@@ -21,10 +21,12 @@ const modelFamilyOrder = [
   'Qwen',
   'Seed',
   'HY',
+  'Grok',
   'GPT',
   'GLM',
   'Claude',
   'Kimi',
+  'LongCat',
   'MiniMax',
   'StepFun',
   'Gemini',
@@ -40,10 +42,12 @@ function getModelFamily(model: string) {
   if (model.startsWith('Qwen')) return 'Qwen';
   if (model.startsWith('Seed') || model.startsWith('Doubao')) return 'Seed';
   if (model.startsWith('HY') || model.startsWith('Hunyuan')) return 'HY';
+  if (model.startsWith('Grok')) return 'Grok';
   if (model.startsWith('GPT')) return 'GPT';
   if (model.startsWith('GLM')) return 'GLM';
   if (model.startsWith('Claude')) return 'Claude';
   if (model.includes('Kimi') || model.startsWith('Moonshot')) return 'Kimi';
+  if (model.startsWith('LongCat')) return 'LongCat';
   if (model.startsWith('MiniMax') || model.startsWith('Minimax')) return 'MiniMax';
   if (model.startsWith('StepFun') || model.startsWith('Step')) return 'StepFun';
   if (model.startsWith('Gemini')) return 'Gemini';

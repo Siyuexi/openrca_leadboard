@@ -9,8 +9,8 @@ description: Refresh the OpenRCA leaderboard site from OpenRCA-2 ops-lite evalua
 
 1. Inspect the source eval repo, normally `~/project/OpenRCA-2-Internal`.
    Read `env/exp/ops-lite.sh`, `scripts/watch_batch.py`, and `eval.db` before changing leaderboard data.
-2. Use the model ids named in `env/exp/ops-lite.sh` and publish only ids that have `exp_id='ops-lite'` and `stage='judged'` records in `eval.db`.
-   Exclude DB-only historical rows unless the user explicitly asks for them.
+2. Use the model ids named in `env/exp/ops-lite.sh` and publish only ids that have `stage='judged'` records in `eval.db`.
+   Use `ops-lite` as the default experiment and the exporter's explicit per-model provenance mapping for isolated completed runs. Never broadly union experiment ids. Exclude DB-only historical rows unless the user explicitly asks for them.
 3. Keep the OpenRCA 2.0 schema aligned to the effective `watch_batch.py` metrics:
    `f1`, `acc`, `node-F1`, `edge-F1`, `any-hit`, `all-hit`, `path-acc`, `type-acc`.
    Use `f1` as the primary score and default sort. Do not add Date, RC P/R/F1, Node P/R, or Edge P/R columns.

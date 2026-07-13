@@ -16,41 +16,66 @@ from pathlib import Path
 
 
 DEFAULT_SOURCE_REPO = Path.home() / "project" / "OpenRCA-2-Internal"
-MODEL_TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*(?:-passthrough|-taiji|-preview)")
+MODEL_ENTRY_RE = re.compile(r"^\s*(?:#\s*)?([A-Za-z0-9][A-Za-z0-9._-]*)\s*$")
+
+# A few completed ops-lite runs were intentionally isolated under their own
+# experiment ids. Keep the provenance explicit per model so a future rerun of
+# the same model in another experiment cannot be silently double-counted.
+MODEL_EXPERIMENT_OVERRIDES = {
+    "gpt-5.6-sol-passthrough": "gpt-5.6-sol",
+    "grok-4.5-passthrough": "grok-4.5",
+    "hunyuan-3.0-dev-0703-major": "hunyuan-0703",
+}
 
 DISPLAY_NAMES = {
     "claude-fable-5-passthrough": ("Claude Fable 5", "Anthropic"),
     "claude-opus-4-8-passthrough": ("Claude Opus 4.8", "Anthropic"),
     "claude-opus-4-6-passthrough": ("Claude Opus 4.6", "Anthropic"),
     "claude-sonnet-4-6-passthrough": ("Claude Sonnet 4.6", "Anthropic"),
+    "claude-sonnet-5-passthrough": ("Claude Sonnet 5", "Anthropic"),
+    "gpt-5.6-sol-passthrough": ("GPT-5.6 Sol", "OpenAI"),
     "gpt-5.5-passthrough": ("GPT-5.5", "OpenAI"),
     "gpt-5.4-2026-03-05-passthrough": ("GPT-5.4", "OpenAI"),
+    "grok-4.5-passthrough": ("Grok 4.5", "xAI"),
     "gemini-3.1-pro-preview": ("Gemini 3.1 Pro", "Google"),
     "gemini-3.5-flash-passthrough": ("Gemini 3.5 Flash", "Google"),
     "moonshot_kimi-k2.6-passthrough": ("Kimi K2.6", "Moonshot AI"),
+    "moonshot_kimi-k2.7-code-passthrough": ("Kimi K2.7 Code", "Moonshot AI"),
     "qwen3.7-max-passthrough": ("Qwen 3.7 Max", "Alibaba"),
     "qwen3.7-plus-passthrough": ("Qwen 3.7 Plus", "Alibaba"),
     "deepseek-v4-pro-passthrough": ("DeepSeek V4 Pro", "DeepSeek"),
     "deepseek-v4-flash-passthrough": ("DeepSeek V4 Flash", "DeepSeek"),
     "doubao-seed-2-0-pro-passthrough": ("Seed 2.0 Pro", "ByteDance"),
     "doubao-seed-2-0-lite-passthrough": ("Seed 2.0 Lite", "ByteDance"),
+    "doubao-seed-2-1-pro-passthrough": ("Seed 2.1 Pro", "ByteDance"),
     "glm-5.2-passthrough": ("GLM-5.2", "Zhipu AI"),
     "glm-5.1-passthrough": ("GLM-5.1", "Zhipu AI"),
     "minimax_m3-passthrough": ("MiniMax M3", "MiniMax"),
     "step-3.7-flash-passthrough": ("StepFun 3.7 Flash", "StepFun"),
     "xiaomi_mimo-v2.5-pro-passthrough": ("MiMo V2.5 Pro", "Xiaomi"),
     "hunyuan-3.0-preview-taiji": ("HY 3.0 Preview", "Tencent"),
+    "hunyuan-3.0-dev-0703-major": ("HY 3.0", "Tencent"),
+    "longcat-2.0-passthrough": ("LongCat 2.0", "Meituan"),
 }
 
 
 def parse_model_ids(exp_file: Path) -> list[str]:
     seen: set[str] = set()
     out: list[str] = []
+    in_models = False
     for line in exp_file.read_text().splitlines():
-        for model_id in MODEL_TOKEN_RE.findall(line):
-            if model_id not in seen:
-                seen.add(model_id)
-                out.append(model_id)
+        if not in_models:
+            in_models = bool(re.match(r"^\s*MODELS\s*=\s*\(\s*$", line))
+            continue
+        if re.match(r"^\s*\)\s*$", line):
+            break
+        match = MODEL_ENTRY_RE.fullmatch(line)
+        if not match:
+            continue
+        model_id = match.group(1)
+        if model_id not in seen:
+            seen.add(model_id)
+            out.append(model_id)
     return out
 
 
@@ -70,25 +95,32 @@ def bool_mean(metrics: list[dict], key: str) -> float | None:
     return sum(1.0 if item.get(key) else 0.0 for item in metrics) / len(metrics)
 
 
-def collect_metrics(db_path: Path, exp_id: str, stage: str) -> dict[str, dict[str, str]]:
+def collect_metrics(
+    db_path: Path,
+    model_ids: list[str],
+    default_exp_id: str,
+    stage: str,
+    experiment_overrides: dict[str, str],
+) -> dict[str, dict[str, str]]:
     by_model: dict[str, list[dict]] = {}
     with sqlite3.connect(db_path) as conn:
-        rows = conn.execute(
-            """
-            SELECT model_name, eval_metrics
-            FROM evaluation_data
-            WHERE exp_id = ? AND stage = ? AND eval_metrics IS NOT NULL
-            """,
-            (exp_id, stage),
-        ).fetchall()
-
-    for model_name, raw_metrics in rows:
-        try:
-            metrics = json.loads(raw_metrics)
-        except json.JSONDecodeError:
-            continue
-        if isinstance(metrics, dict):
-            by_model.setdefault(model_name, []).append(metrics)
+        for model_id in model_ids:
+            exp_id = experiment_overrides.get(model_id, default_exp_id)
+            rows = conn.execute(
+                """
+                SELECT eval_metrics
+                FROM evaluation_data
+                WHERE exp_id = ? AND model_name = ? AND stage = ? AND eval_metrics IS NOT NULL
+                """,
+                (exp_id, model_id, stage),
+            ).fetchall()
+            for (raw_metrics,) in rows:
+                try:
+                    metrics = json.loads(raw_metrics)
+                except json.JSONDecodeError:
+                    continue
+                if isinstance(metrics, dict):
+                    by_model.setdefault(model_id, []).append(metrics)
 
     out: dict[str, dict[str, str]] = {}
     for model_id, metrics in by_model.items():
@@ -174,7 +206,13 @@ def main() -> None:
         raise SystemExit(f"missing eval DB: {db_path}")
 
     model_ids = parse_model_ids(exp_file)
-    metrics_by_model = collect_metrics(db_path, args.exp_id, args.stage)
+    metrics_by_model = collect_metrics(
+        db_path,
+        model_ids,
+        args.exp_id,
+        args.stage,
+        MODEL_EXPERIMENT_OVERRIDES,
+    )
     print(render_rows(model_ids, metrics_by_model, args.method_name))
 
 

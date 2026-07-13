@@ -14,7 +14,7 @@ npm run build
 
 Leaderboard rows are stored in `src/data/modelData.ts`.
 
-OpenRCA 2.0 rows are exported from `~/project/OpenRCA-2-Internal/eval.db` using ops-lite judged records and the model ids named in `~/project/OpenRCA-2-Internal/env/exp/ops-lite.sh`.
+OpenRCA 2.0 rows are exported from `~/project/OpenRCA-2-Internal/eval.db` using judged records and the model ids named in `~/project/OpenRCA-2-Internal/env/exp/ops-lite.sh`. The exporter uses `ops-lite` by default and explicit per-model experiment overrides for completed isolated runs.
 The OpenRCA 2.0 table uses `f1` as the primary score and only these effective metrics:
 
 `f1`, `acc`, `node-F1`, `edge-F1`, `any-hit`, `all-hit`, `path-acc`, `type-acc`.

@@ -19,8 +19,8 @@ Repo-level Codex skills live under `.codex/skills/`. Use `$update-openrca-leader
 
 ## OpenRCA 2.0 Leaderboard Rules
 
-OpenRCA 2.0 data comes from `~/project/OpenRCA-2-Internal/eval.db`, filtered to `exp_id='ops-lite'` and `stage='judged'`.
-The model list is derived from `~/project/OpenRCA-2-Internal/env/exp/ops-lite.sh`; publish the intersection of named models and DB records.
+OpenRCA 2.0 data comes from `~/project/OpenRCA-2-Internal/eval.db`, normally filtered to `exp_id='ops-lite'` and `stage='judged'`.
+The model list is derived from `~/project/OpenRCA-2-Internal/env/exp/ops-lite.sh`; publish the intersection of named models and DB records. Models completed under isolated experiment ids must use the explicit per-model provenance mapping in the exporter; never broadly union experiments.
 
 Use only these OpenRCA 2.0 metric columns:
 
