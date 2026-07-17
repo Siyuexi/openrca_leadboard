@@ -542,7 +542,7 @@ url={https://openreview.net/forum?id=M4qNIzQYpd}
                       : '0 6px 16px rgba(15, 23, 42, 0.08)'
                   }}
                 >
-                  OpenRCA 2.0 [Preview]
+                  OpenRCA 2.0
                 </AntButton>
               </Space.Compact>
             </Box>
@@ -568,7 +568,6 @@ url={https://openreview.net/forum?id=M4qNIzQYpd}
                   <li>Deep instrumentation guarantees fault propagation with observable cascading symptoms.</li>
                   <li>More complex fault types and significantly larger data volume.</li>
                   <li>Tests the model's causal inference and reasoning capabilities.</li>
-                  <li><em>Note: This is a preview version of OpenRCA 2.0. Official code and dataset will be released soon.</em></li>
                 </Box>
               )}
             </Box>

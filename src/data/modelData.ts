@@ -87,7 +87,7 @@ export const orgLogoMap: { [key: string]: string } = {
 // 新闻数据
 export const news = [
   {date: '2026/7/13', content: "OpenRCA 2.0 adds GPT-5.6 Sol, Grok 4.5, Hunyuan 3.0, and the latest ops-lite results."},
-  {date: '2026/2/23', content: "OpenRCA 2.0 preview evaluation results are released."},
+  {date: '2026/2/23', content: "OpenRCA 2.0 evaluation results are released."},
   {date: '2026/2/10', content: "New model baselines with RCA-Agent scaffolds are released."},
   // {date: '2026/1/17', content: "Anthropic's Claude 4.5 Opus + Claude Agent SDK & SRE Tool MCP achieves SOTA"},
   { date: '2025/12/22', content: 'Our AIOps dataset study paper has been accepted by FSE 2026.' },
