@@ -29,6 +29,7 @@ MODEL_EXPERIMENT_OVERRIDES = {
 
 DISPLAY_NAMES = {
     "claude-fable-5-passthrough": ("Claude Fable 5", "Anthropic"),
+    "claude-opus-5-passthrough": ("Claude Opus 5", "Anthropic"),
     "claude-opus-4-8-passthrough": ("Claude Opus 4.8", "Anthropic"),
     "claude-opus-4-6-passthrough": ("Claude Opus 4.6", "Anthropic"),
     "claude-sonnet-4-6-passthrough": ("Claude Sonnet 4.6", "Anthropic"),
@@ -39,8 +40,10 @@ DISPLAY_NAMES = {
     "grok-4.5-passthrough": ("Grok 4.5", "xAI"),
     "gemini-3.1-pro-preview": ("Gemini 3.1 Pro", "Google"),
     "gemini-3.5-flash-passthrough": ("Gemini 3.5 Flash", "Google"),
+    "gemini-3.6-flash-passthrough": ("Gemini 3.6 Flash", "Google"),
     "moonshot_kimi-k2.6-passthrough": ("Kimi K2.6", "Moonshot AI"),
     "moonshot_kimi-k2.7-code-passthrough": ("Kimi K2.7 Code", "Moonshot AI"),
+    "moonshot_kimi-k3-passthrough": ("Kimi K3", "Moonshot AI"),
     "qwen3.7-max-passthrough": ("Qwen 3.7 Max", "Alibaba"),
     "qwen3.7-plus-passthrough": ("Qwen 3.7 Plus", "Alibaba"),
     "deepseek-v4-pro-passthrough": ("DeepSeek V4 Pro", "DeepSeek"),
@@ -56,6 +59,7 @@ DISPLAY_NAMES = {
     "hunyuan-3.0-preview-taiji": ("HY 3.0 Preview", "Tencent"),
     "hunyuan-3.0-dev-0703-major": ("HY 3.0", "Tencent"),
     "longcat-2.0-passthrough": ("LongCat 2.0", "Meituan"),
+    "muse-spark-1.1-passthrough": ("Muse Spark 1.1", "Meta"),
 }
 
 

@@ -38,5 +38,5 @@ The aggregation semantics should match `~/project/OpenRCA-2-Internal/scripts/wat
 
 ## Release Gate
 
-Before any GitHub Pages deploy, push, or published update, run the app locally and let the user review the rendered HTML.
-Do not deploy until the user explicitly approves the localhost preview.
+Run the build and lint locally before release. Publish first to `Siyuexi/openrca_leadboard` (`main` plus `gh-pages`) and give the user its verified public GitHub Pages URL for review.
+Do not publish to `microsoft/OpenRCA` until the user explicitly approves the Siyuexi public page.

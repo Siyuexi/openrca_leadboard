@@ -32,6 +32,7 @@ const modelFamilyOrder = [
   'Gemini',
   'DeepSeek',
   'MiMo',
+  'Muse',
   'Mistral',
   'Command',
   'Llama',
@@ -53,6 +54,7 @@ function getModelFamily(model: string) {
   if (model.startsWith('Gemini')) return 'Gemini';
   if (model.startsWith('DeepSeek')) return 'DeepSeek';
   if (model.startsWith('MiMo') || model.startsWith('Xiaomi')) return 'MiMo';
+  if (model.startsWith('Muse')) return 'Muse';
   if (model.startsWith('Mistral')) return 'Mistral';
   if (model.startsWith('Command')) return 'Command';
   if (model.startsWith('Llama')) return 'Llama';

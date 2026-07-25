@@ -48,6 +48,7 @@ export const modelColorMap: { [key: string]: { color: string, backgroundColor: s
   'Qwen3-Next-80B': { color: '#7b1fa2', backgroundColor: '#f3e5f5' },
   'Seed 1.6': { color: '#33691e', backgroundColor: '#dcedc8' },
   'Claude Fable 5': { color: '#6d3b1f', backgroundColor: '#f4e2d2' },
+  'Claude Opus 5': { color: '#7c2d12', backgroundColor: '#ffedd5' },
   'Claude Opus 4.8': { color: '#7f1d1d', backgroundColor: '#fee2e2' },
   'Claude Opus 4.6': { color: '#991b1b', backgroundColor: '#ffe4e6' },
   'Claude Sonnet 5': { color: '#9a3412', backgroundColor: '#ffedd5' },
@@ -57,8 +58,10 @@ export const modelColorMap: { [key: string]: { color: string, backgroundColor: s
   'Grok 4.5': { color: '#111827', backgroundColor: '#e5e7eb' },
   'Gemini 3.1 Pro': { color: '#1d4ed8', backgroundColor: '#dbeafe' },
   'Gemini 3.5 Flash': { color: '#2563eb', backgroundColor: '#e0f2fe' },
+  'Gemini 3.6 Flash': { color: '#1e40af', backgroundColor: '#dbeafe' },
   'Kimi K2.6': { color: '#3730a3', backgroundColor: '#e0e7ff' },
   'Kimi K2.7 Code': { color: '#4338ca', backgroundColor: '#eef2ff' },
+  'Kimi K3': { color: '#312e81', backgroundColor: '#e0e7ff' },
   'Qwen 3.7 Max': { color: '#0f766e', backgroundColor: '#ccfbf1' },
   'Qwen 3.7 Plus': { color: '#115e59', backgroundColor: '#d1fae5' },
   'DeepSeek V4 Pro': { color: '#4338ca', backgroundColor: '#e0e7ff' },
@@ -70,7 +73,8 @@ export const modelColorMap: { [key: string]: { color: string, backgroundColor: s
   'StepFun 3.7 Flash': { color: '#a16207', backgroundColor: '#fef3c7' },
   'MiMo V2.5 Pro': { color: '#9f1239', backgroundColor: '#ffe4e6' },
   'HY 3.0': { color: '#0e7490', backgroundColor: '#cffafe' },
-  'LongCat 2.0': { color: '#92400e', backgroundColor: '#fef3c7' }
+  'LongCat 2.0': { color: '#92400e', backgroundColor: '#fef3c7' },
+  'Muse Spark 1.1': { color: '#6b21a8', backgroundColor: '#f3e8ff' }
 };
 
 // 组织图标映射
@@ -86,6 +90,7 @@ export const orgLogoMap: { [key: string]: string } = {
 
 // 新闻数据
 export const news = [
+  {date: '2026/7/25', content: "OpenRCA 2.0 adds Claude Opus 5, Kimi K3, Gemini 3.6 Flash, and Muse Spark 1.1."},
   {date: '2026/7/13', content: "OpenRCA 2.0 adds GPT-5.6 Sol, Grok 4.5, Hunyuan 3.0, and the latest ops-lite results."},
   {date: '2026/2/23', content: "OpenRCA 2.0 evaluation results are released."},
   {date: '2026/2/10', content: "New model baselines with RCA-Agent scaffolds are released."},
@@ -135,11 +140,14 @@ export const modelDataOpenRCA: Data[] = [
 ];
 
 export const modelDataOpenRCA2: DataOpenRCA2[] = [
+  { name: 'DeepResearch', model: 'Claude Opus 5', modelId: 'claude-opus-5-passthrough', frameworkOpen: false, modelOpen: false, f1: '61.37%', acc: '46.40%', nodeF1: '80.15%', edgeF1: '66.99%', anyHit: '88.80%', allHit: '64.00%', pathAcc: '68.80%', typeAcc: '77.36%' },
   { name: 'DeepResearch', model: 'GPT-5.6 Sol', modelId: 'gpt-5.6-sol-passthrough', frameworkOpen: false, modelOpen: false, f1: '54.43%', acc: '38.00%', nodeF1: '76.05%', edgeF1: '61.29%', anyHit: '84.20%', allHit: '54.00%', pathAcc: '59.60%', typeAcc: '74.47%' },
   { name: 'DeepResearch', model: 'Claude Fable 5', modelId: 'claude-fable-5-passthrough', frameworkOpen: false, modelOpen: false, f1: '53.36%', acc: '35.20%', nodeF1: '78.80%', edgeF1: '66.07%', anyHit: '85.20%', allHit: '51.20%', pathAcc: '62.00%', typeAcc: '73.59%' },
   { name: 'DeepResearch', model: 'Grok 4.5', modelId: 'grok-4.5-passthrough', frameworkOpen: false, modelOpen: false, f1: '45.90%', acc: '33.60%', nodeF1: '78.68%', edgeF1: '65.42%', anyHit: '87.40%', allHit: '61.20%', pathAcc: '50.00%', typeAcc: '59.15%' },
+  { name: 'DeepResearch', model: 'Kimi K3', modelId: 'moonshot_kimi-k3-passthrough', frameworkOpen: false, modelOpen: false, f1: '43.83%', acc: '28.00%', nodeF1: '77.68%', edgeF1: '63.71%', anyHit: '85.00%', allHit: '52.40%', pathAcc: '50.80%', typeAcc: '60.71%' },
   { name: 'DeepResearch', model: 'Claude Sonnet 5', modelId: 'claude-sonnet-5-passthrough', frameworkOpen: false, modelOpen: false, f1: '43.20%', acc: '27.20%', nodeF1: '78.79%', edgeF1: '64.10%', anyHit: '85.20%', allHit: '51.40%', pathAcc: '50.00%', typeAcc: '60.09%' },
   { name: 'DeepResearch', model: 'GPT-5.5', modelId: 'gpt-5.5-passthrough', frameworkOpen: false, modelOpen: false, f1: '41.57%', acc: '26.80%', nodeF1: '77.26%', edgeF1: '62.77%', anyHit: '84.80%', allHit: '51.40%', pathAcc: '47.80%', typeAcc: '57.55%' },
+  { name: 'DeepResearch', model: 'Gemini 3.6 Flash', modelId: 'gemini-3.6-flash-passthrough', frameworkOpen: false, modelOpen: false, f1: '41.53%', acc: '26.40%', nodeF1: '76.88%', edgeF1: '63.05%', anyHit: '82.80%', allHit: '51.00%', pathAcc: '49.00%', typeAcc: '59.18%' },
   { name: 'DeepResearch', model: 'GPT-5.4', modelId: 'gpt-5.4-2026-03-05-passthrough', frameworkOpen: false, modelOpen: false, f1: '40.83%', acc: '25.80%', nodeF1: '74.48%', edgeF1: '59.42%', anyHit: '84.20%', allHit: '50.40%', pathAcc: '46.60%', typeAcc: '57.48%' },
   { name: 'DeepResearch', model: 'Claude Opus 4.6', modelId: 'claude-opus-4-6-passthrough', frameworkOpen: false, modelOpen: false, f1: '40.40%', acc: '25.20%', nodeF1: '77.34%', edgeF1: '62.29%', anyHit: '82.00%', allHit: '48.80%', pathAcc: '47.40%', typeAcc: '58.41%' },
   { name: 'DeepResearch', model: 'Kimi K2.6', modelId: 'moonshot_kimi-k2.6-passthrough', frameworkOpen: false, modelOpen: false, f1: '39.60%', acc: '24.80%', nodeF1: '74.11%', edgeF1: '58.18%', anyHit: '80.40%', allHit: '48.00%', pathAcc: '45.89%', typeAcc: '58.46%' },
@@ -147,6 +155,7 @@ export const modelDataOpenRCA2: DataOpenRCA2[] = [
   { name: 'DeepResearch', model: 'Gemini 3.5 Flash', modelId: 'gemini-3.5-flash-passthrough', frameworkOpen: false, modelOpen: false, f1: '38.63%', acc: '23.60%', nodeF1: '70.05%', edgeF1: '54.29%', anyHit: '77.60%', allHit: '45.20%', pathAcc: '42.80%', typeAcc: '59.41%' },
   { name: 'DeepResearch', model: 'HY 3.0', modelId: 'hunyuan-3.0-dev-0703-major', frameworkOpen: false, modelOpen: false, f1: '37.50%', acc: '22.60%', nodeF1: '70.42%', edgeF1: '52.88%', anyHit: '81.60%', allHit: '48.80%', pathAcc: '42.40%', typeAcc: '55.51%' },
   { name: 'DeepResearch', model: 'Gemini 3.1 Pro', modelId: 'gemini-3.1-pro-preview', frameworkOpen: false, modelOpen: false, f1: '37.47%', acc: '23.40%', nodeF1: '73.55%', edgeF1: '57.43%', anyHit: '80.40%', allHit: '47.60%', pathAcc: '43.00%', typeAcc: '55.22%' },
+  { name: 'DeepResearch', model: 'Muse Spark 1.1', modelId: 'muse-spark-1.1-passthrough', frameworkOpen: false, modelOpen: false, f1: '37.25%', acc: '23.80%', nodeF1: '76.20%', edgeF1: '61.24%', anyHit: '84.20%', allHit: '54.60%', pathAcc: '44.29%', typeAcc: '52.97%' },
   { name: 'DeepResearch', model: 'GLM-5.2', modelId: 'glm-5.2-passthrough', frameworkOpen: false, modelOpen: false, f1: '37.23%', acc: '21.40%', nodeF1: '73.91%', edgeF1: '58.03%', anyHit: '82.20%', allHit: '50.00%', pathAcc: '44.40%', typeAcc: '54.99%' },
   { name: 'DeepResearch', model: 'DeepSeek V4 Pro', modelId: 'deepseek-v4-pro-passthrough', frameworkOpen: false, modelOpen: false, f1: '36.83%', acc: '23.60%', nodeF1: '71.37%', edgeF1: '54.90%', anyHit: '78.60%', allHit: '47.60%', pathAcc: '42.00%', typeAcc: '55.47%' },
   { name: 'DeepResearch', model: 'Qwen 3.7 Max', modelId: 'qwen3.7-max-passthrough', frameworkOpen: false, modelOpen: false, f1: '36.83%', acc: '21.00%', nodeF1: '74.65%', edgeF1: '62.00%', anyHit: '84.40%', allHit: '52.20%', pathAcc: '45.40%', typeAcc: '53.91%' },
